@@ -14,7 +14,7 @@ public interface TipCalculator {
     //changed so that each class can define ServiceQuality
    
     
-    public abstract double calculateTip();
+    public abstract void calculateTip();
     
     
 }

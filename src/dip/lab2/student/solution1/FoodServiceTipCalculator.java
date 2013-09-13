@@ -15,13 +15,16 @@ public class FoodServiceTipCalculator implements TipCalculator {
     
     private static final double MIN_BILL = 1.00;
     private static final double NUM_TOO_LOW=0;
+    private static final double NUM_TOO_HIGH=1.0;
     private static final String PROMPT_FOR_BILLAMOUNT="Please Enter Bill Amount";
     private static final String BILL_ENTRY_ERR =
             "Error: bill must be a number greater than or equal to " + MIN_BILL;
     private static final String PROMPT_USER_FOR_SERVICEQUALITY="Please Enter a Service Quality Rating";
     private static final String PROMPT_FOR_TIPPERCENT="Please enter a tip amount. "+
             "We recommend: ";
-    private static final String NEED_NUMBER="Please enter a decimal value";
+    private static final String TIP_ENTRY_ERR="Please enter decimal value larger than 0.00, less than 1.0";
+    private static final String NEED_NUMBER="Please enter a number value";
+    private static final String NEED_DECIMAL="Please enter a decimal value";
     private static final String PROMPT_AGAIN="Please Try Again";
     
     //may want to change these to a user defined value
@@ -85,14 +88,14 @@ public class FoodServiceTipCalculator implements TipCalculator {
             //test input for proper value
             try{
                 Double.parseDouble(uIn);
-                if(Double.parseDouble(uIn) <= NUM_TOO_LOW) {
-                throw new IllegalArgumentException(BILL_ENTRY_ERR);
+                if(Double.parseDouble(uIn) <= NUM_TOO_LOW || Double.parseDouble(uIn)>=NUM_TOO_HIGH) {
+                    userOut.writeLine(TIP_ENTRY_ERR);
                 }else{
                     ready=true;
                     tip=bill*Double.parseDouble(uIn);
                     break;
                 }
-            }catch(NumberFormatException e){userOut.writeLine(NEED_NUMBER);}
+            }catch(NumberFormatException e){userOut.writeLine(NEED_DECIMAL);}
             
         }while(!ready);
         
@@ -108,9 +111,9 @@ public class FoodServiceTipCalculator implements TipCalculator {
             userOut.writeLine(PROMPT_FOR_BILLAMOUNT);
             uIn=userIn.readLine();
             try{
-                Double.parseDouble(uIn);
+                billAmt=Double.parseDouble(uIn);
                 if(billAmt < MIN_BILL) {
-                throw new IllegalArgumentException(BILL_ENTRY_ERR);
+                    userOut.writeLine(BILL_ENTRY_ERR);
                 }else{
                     ready=true;
                     break;
@@ -126,20 +129,18 @@ public class FoodServiceTipCalculator implements TipCalculator {
 
 
     @Override
-    public final double calculateTip(){
-        double tip=0;
+    public final void calculateTip(){
+        
         //set service quality
         this.setServiceQuality();
         
         //set the bill
         this.setBill();
         
-        //set a fair percentage for tip
-        
         //run the calculations
         
-        tip=this.getTip();
-        return tip;//place holder until things really happen
+        userOut.writeLine(Double.toString(this.getTip()));
+        
     }
     
     // private void setServiceRating(ServiceQuality q) {
@@ -148,6 +149,7 @@ public class FoodServiceTipCalculator implements TipCalculator {
     private final void setServiceQuality(){
         boolean ready=false;
         ServiceQuality sQ=ServiceQuality.GOOD;
+        String uIn="";
         //set the service rating
         do{
             
@@ -157,13 +159,16 @@ public class FoodServiceTipCalculator implements TipCalculator {
                 userOut.writeLine(s.toString());
             }
             
+            uIn=userIn.readLine();
             //test user input
             for(ServiceQuality s:ServiceQuality.values()){
-                if(userIn.readLine().toUpperCase().equals(s.toString())){
+                if(uIn.toUpperCase().equals(s.toString())){
                     ready=true;
                     sQ=s;
                     break;
-                }else{userOut.writeLine(PROMPT_AGAIN);}
+                }
+            }if(!ready){
+                userOut.writeLine(PROMPT_AGAIN);
             }
         }while(!ready);
         

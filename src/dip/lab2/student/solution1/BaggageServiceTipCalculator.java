@@ -82,5 +82,10 @@ public class BaggageServiceTipCalculator implements TipCalculator{
         }
         this.baseTipPerBag = baseTipPerBag;
     }
+    
+    //*************************************************************
+    //Starting new codes here 9/12/2013
+    //
+    //*************************************************************
 
 }
