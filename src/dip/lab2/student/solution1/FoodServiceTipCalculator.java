@@ -16,6 +16,8 @@ public class FoodServiceTipCalculator implements TipCalculator {
     private static final double MIN_BILL = 1.00;
     private static final double NUM_TOO_LOW=0;
     private static final double NUM_TOO_HIGH=1.0;
+    
+    //messages
     private static final String PROMPT_FOR_BILLAMOUNT="Please Enter Bill Amount";
     private static final String BILL_ENTRY_ERR =
             "Error: bill must be a number greater than or equal to " + MIN_BILL;
@@ -28,9 +30,16 @@ public class FoodServiceTipCalculator implements TipCalculator {
     private static final String PROMPT_AGAIN="Please Try Again";
     
     //may want to change these to a user defined value
+    //changed in the setter -- used these as suggestions
     private static final double GOOD_RATE = 0.20;
     private static final double FAIR_RATE = 0.15;
     private static final double POOR_RATE = 0.10;
+     
+    //use the tipRate sequence to correspond to the ServiceQuality sequence
+    private final double[] tipRates={GOOD_RATE,FAIR_RATE,POOR_RATE };
+      //a scale is provided to judge service quality
+    //the enum is to be used to help calculate tip
+    private static enum  ServiceQuality {GOOD, FAIR, POOR };
 
     private double bill;
     private ServiceQuality serviceQuality;
@@ -69,7 +78,12 @@ public class FoodServiceTipCalculator implements TipCalculator {
         
         do{
             userOut.writeLine(PROMPT_FOR_TIPPERCENT);
-            
+            int i=0;
+            for(ServiceQuality q:ServiceQuality.values()){
+                userOut.writeLine(q.toString() + ": " + tipRates[i]);
+                i++;
+            }
+            /*
             for(ServiceQuality q:ServiceQuality.values()){
                 switch(q) {
                     case GOOD: 
@@ -83,6 +97,8 @@ public class FoodServiceTipCalculator implements TipCalculator {
                         break;
                 }
             }
+            * */
+            
             //get user input
             uIn=userIn.readLine();
             //test input for proper value
@@ -175,10 +191,6 @@ public class FoodServiceTipCalculator implements TipCalculator {
         serviceQuality = sQ;
     }
     
-     //a scale is provided to judge service quality
-    //the enum is to be used to help calculate tip
-    private static enum  ServiceQuality {
-           GOOD, FAIR, POOR
-    };
+   
 
 }
