@@ -23,8 +23,8 @@ public class Startup {
  
     public static void main(String[] args) {
                 
-       TipCalculator calc = new FoodServiceTipCalculator();
-       //TipCalculator calc = new BaggageServiceTipCalculator();
+       //TipCalculator calc = new FoodServiceTipCalculator();
+       TipCalculator calc = new BaggageServiceTipCalculator();
         
         
        TipManager tipManager = new TipManager(calc);
