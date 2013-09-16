@@ -10,8 +10,8 @@ package dip.lab2.student.solution1;
  */
 public class FoodServiceTipCalculator implements TipCalculator {
     
-    UserInput userIn;//abstraction
-    UserOutput userOut;//abstraction
+    private UserInput userIn;//abstraction
+    private UserOutput userOut;//abstraction
     
     private static final double MIN_BILL = 1.00;
     private static final double NUM_TOO_LOW=0;
@@ -71,7 +71,7 @@ public class FoodServiceTipCalculator implements TipCalculator {
 //        this.setBill(billAmt);
 //    }
     
-    private double getTip() {
+    private final double getTip() {
         double tip = 0.00; // always initialize local variables
         boolean ready=false;
         String uIn="";
@@ -191,6 +191,4 @@ public class FoodServiceTipCalculator implements TipCalculator {
         serviceQuality = sQ;
     }
     
-   
-
 }

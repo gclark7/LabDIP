@@ -31,3 +31,7 @@ DON'T ALLOW YOURSELF TO BE PARALYZED BY CONFUSION! ASK FOR HELP EARLY AND OFTEN!
 9/12/2013
 Step 1: create interface TipCalculator, ensure low levels implement them 
 Step 2: create manager TipManager to communicate with calculators
+Step 3: encapsulate FoodServiceTipCalculator
+step 4: get food service tip to work & test it for DIP 
+step 5: encapsulate BaggageServiceTipCalculator
+step 6: get baggage service tip to work & test it for DIP 
