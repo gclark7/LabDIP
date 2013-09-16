@@ -19,14 +19,14 @@ public class BaggageServiceTipCalculator implements TipCalculator{
     private static final double NUM_TOO_HIGH=1.0;
     
     //messages
-    private static final String PROMPT_FOR_BASETIP_PERBAG="Please Enter Tip Amount Per Bag";
+    private static final String PROMPT_FOR_BASETIP_PERBAG="Please Enter Base Tip Per Bag";
     private static final String BASETIP_ERR="Please enter number greater than or equal to 0";
     private static final String PROMPT_FOR_BAGS="Pleae enter the number of bags";
     private static final String BAG_ENTRY_ERR =
             "Error: Number of bags must be a whole number greater than or equal to " + MIN_BILL;
     
     private static final String PROMPT_USER_FOR_SERVICEQUALITY="Please Enter a Service Quality Rating";
-    private static final String PROMPT_FOR_TIPPERCENT="Please enter a tip amount. "+
+    private static final String PROMPT_FOR_TIPPERCENT="Please enter a tip for Service Quality. "+
             "We recommend: ";
     private static final String TIP_ENTRY_ERR="Please enter a decimal value larger than 0.00, less than 1.0";
     
@@ -51,6 +51,7 @@ public class BaggageServiceTipCalculator implements TipCalculator{
 
     private double baseTipPerBag;
     private int bagCount;
+    private double tip;
 
     
     
@@ -75,12 +76,12 @@ public class BaggageServiceTipCalculator implements TipCalculator{
         
         setBagCount();
         setBaseTipPerBag(); 
-        setServiceQuality();
-        getTipForBaggageHandler();//returns calcualted values
+        setTip();
+        userOut.writeLine(Double.toString(getTipForBaggageHandler()));//returns calcualted values
                 
     }
     
-    private void setBaseTipPerBag() {//step 2
+    private final void setBaseTipPerBag() {//step 2
         boolean ready=false;
         String uIn="";
         
@@ -98,8 +99,9 @@ public class BaggageServiceTipCalculator implements TipCalculator{
                     break;
                 }
             }catch(NumberFormatException e){userOut.writeLine(NEED_NUMBER);}
-            
-             userOut.writeLine(PROMPT_AGAIN);
+            if(!ready){
+                userOut.writeLine(PROMPT_AGAIN);
+            }
         }while(!ready);
         
     }
@@ -111,7 +113,7 @@ public class BaggageServiceTipCalculator implements TipCalculator{
         //need an integer from user
         do{
             userOut.writeLine(PROMPT_FOR_BAGS);
-            userIn.readLine();
+            uIn=userIn.readLine();
         
             try{
                     Integer.parseInt(uIn);
@@ -122,42 +124,16 @@ public class BaggageServiceTipCalculator implements TipCalculator{
                         this.bagCount = Integer.parseInt(uIn);
                         break;
                     }
-                }catch(NumberFormatException e){userOut.writeLine(NEED_INTEGER);}
-
-             userOut.writeLine(PROMPT_AGAIN);
-        }while(!ready);
-    }
-
-     private final void setServiceQuality(){//step 3
-        boolean ready=false;
-        ServiceQuality sQ=ServiceQuality.GOOD;
-        String uIn="";
-        //set the service rating
-        do{
+            }catch(NumberFormatException e){userOut.writeLine(NEED_INTEGER);}
             
-            userOut.writeLine(PROMPT_USER_FOR_SERVICEQUALITY);
-            //ouput ServiceQuality list
-            for(ServiceQuality s:ServiceQuality.values()){
-                userOut.writeLine(s.toString());
-            }
-            
-            uIn=userIn.readLine();
-            //test user input
-            for(ServiceQuality s:ServiceQuality.values()){
-                if(uIn.toUpperCase().equals(s.toString())){
-                    ready=true;
-                    sQ=s;
-                    break;
-                }
-            }if(!ready){
+            if(!ready){
                 userOut.writeLine(PROMPT_AGAIN);
             }
         }while(!ready);
-        
-        serviceQuality = sQ;
     }
+
      
-    private final double getTipForBaggageHandler() {//last step
+     private final void setTip(){//step 3
         double tip = 0.00; // always initialize local variables
         boolean ready=false;
         String uIn="";
@@ -183,18 +159,23 @@ public class BaggageServiceTipCalculator implements TipCalculator{
                     break;
                 }
             }catch(NumberFormatException e){userOut.writeLine(NEED_DECIMAL);}
-            
-            userOut.writeLine(PROMPT_AGAIN);
+            if(!ready){
+                userOut.writeLine(PROMPT_AGAIN);
+            }
         }while(!ready);
+    }
+     
+    private final double getTipForBaggageHandler() {//last step
         
-        return tip;
+        return baseTipPerBag * bagCount * (1 + tip);
     }
     
    
-
-     
+    public final double getTip(){
+        return tip;
+    }
     
-     public double getBaseTipPerBag() {
+     public final double getBaseTipPerBag() {
         return baseTipPerBag;
     }
     
