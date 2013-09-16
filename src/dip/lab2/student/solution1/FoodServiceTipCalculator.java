@@ -43,6 +43,7 @@ public class FoodServiceTipCalculator implements TipCalculator {
 
     private double bill;
     private ServiceQuality serviceQuality;
+    private double tip;
     
     //constructors
     //changed to a more dynamic system to avoid magic numbers
@@ -72,7 +73,84 @@ public class FoodServiceTipCalculator implements TipCalculator {
 //    }
     
     private final double getTip() {
-        double tip = 0.00; // always initialize local variables
+        
+        return tip;
+    }
+
+    private final void setBill() {
+        double billAmt=0;
+        boolean ready=false;
+        String uIn="";
+        
+        do{
+            userOut.writeLine(PROMPT_FOR_BILLAMOUNT);
+            uIn=userIn.readLine();
+            try{
+                billAmt=Double.parseDouble(uIn);
+                if(billAmt < MIN_BILL) {
+                    userOut.writeLine(BILL_ENTRY_ERR);
+                }else{
+                    ready=true;
+                    break;
+                }
+            }catch(NumberFormatException e){userOut.writeLine(NEED_NUMBER);}
+            
+            
+        }while(!ready);
+        
+        
+        bill = billAmt;
+    }
+
+
+    @Override
+    public final void calculateTip(){
+        
+        
+        //set the bill
+        this.setBill();
+        
+        //set tip based upon quality
+        this.setTip();
+        
+        userOut.writeLine(Double.toString(this.getTip()));
+        
+    }
+    
+    // private void setServiceRating(ServiceQuality q) {
+        // No need to validate because enums provide type safety!
+        //I'm using an input to get enum...No magic numbers
+    private final void setServiceQuality(){
+        boolean ready=false;
+        ServiceQuality sQ=ServiceQuality.GOOD;
+        String uIn="";
+        //set the service rating
+        do{
+            
+            userOut.writeLine(PROMPT_USER_FOR_SERVICEQUALITY);
+            //ouput ServiceQuality list
+            for(ServiceQuality s:ServiceQuality.values()){
+                userOut.writeLine(s.toString());
+            }
+            
+            uIn=userIn.readLine();
+            //test user input
+            for(ServiceQuality s:ServiceQuality.values()){
+                if(uIn.toUpperCase().equals(s.toString())){
+                    ready=true;
+                    sQ=s;
+                    break;
+                }
+            }if(!ready){
+                userOut.writeLine(PROMPT_AGAIN);
+            }
+        }while(!ready);
+        
+        serviceQuality = sQ;
+    }
+    
+    private final void setTip(){
+        
         boolean ready=false;
         String uIn="";
         
@@ -112,83 +190,10 @@ public class FoodServiceTipCalculator implements TipCalculator {
                     break;
                 }
             }catch(NumberFormatException e){userOut.writeLine(NEED_DECIMAL);}
-            
-        }while(!ready);
-        
-        return tip;
-    }
-
-    private final void setBill() {
-        double billAmt=0;
-        boolean ready=false;
-        String uIn="";
-        
-        do{
-            userOut.writeLine(PROMPT_FOR_BILLAMOUNT);
-            uIn=userIn.readLine();
-            try{
-                billAmt=Double.parseDouble(uIn);
-                if(billAmt < MIN_BILL) {
-                    userOut.writeLine(BILL_ENTRY_ERR);
-                }else{
-                    ready=true;
-                    break;
-                }
-            }catch(NumberFormatException e){userOut.writeLine(NEED_NUMBER);}
-            
-            
-        }while(!ready);
-        
-        
-        bill = billAmt;
-    }
-
-
-    @Override
-    public final void calculateTip(){
-        
-        //set service quality
-        this.setServiceQuality();
-        
-        //set the bill
-        this.setBill();
-        
-        //run the calculations
-        
-        userOut.writeLine(Double.toString(this.getTip()));
-        
-    }
-    
-    // private void setServiceRating(ServiceQuality q) {
-        // No need to validate because enums provide type safety!
-        //I'm using an input to get enum...No magic numbers
-    private final void setServiceQuality(){
-        boolean ready=false;
-        ServiceQuality sQ=ServiceQuality.GOOD;
-        String uIn="";
-        //set the service rating
-        do{
-            
-            userOut.writeLine(PROMPT_USER_FOR_SERVICEQUALITY);
-            //ouput ServiceQuality list
-            for(ServiceQuality s:ServiceQuality.values()){
-                userOut.writeLine(s.toString());
-            }
-            
-            uIn=userIn.readLine();
-            //test user input
-            for(ServiceQuality s:ServiceQuality.values()){
-                if(uIn.toUpperCase().equals(s.toString())){
-                    ready=true;
-                    sQ=s;
-                    break;
-                }
-            }if(!ready){
+            if(!ready){
                 userOut.writeLine(PROMPT_AGAIN);
             }
         }while(!ready);
-        
-        serviceQuality = sQ;
     }
     
 }

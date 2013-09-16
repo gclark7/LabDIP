@@ -134,7 +134,7 @@ public class BaggageServiceTipCalculator implements TipCalculator{
 
      
      private final void setTip(){//step 3
-        double tip = 0.00; // always initialize local variables
+        //double tip = 0.00; // always initialize local variables
         boolean ready=false;
         String uIn="";
         
@@ -155,7 +155,7 @@ public class BaggageServiceTipCalculator implements TipCalculator{
                     userOut.writeLine(TIP_ENTRY_ERR);
                 }else{
                     ready=true;
-                    tip=baseTipPerBag * bagCount * (1 + Double.parseDouble(uIn));
+                    tip= Double.parseDouble(uIn);
                     break;
                 }
             }catch(NumberFormatException e){userOut.writeLine(NEED_DECIMAL);}
