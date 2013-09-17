@@ -17,10 +17,18 @@ public class Startup {
          */
 
         //Low-level modules
+        /*
         HourlyEmployee emp1 = new HourlyEmployee(10.50, 2020);
         SalariedEmployee emp2 = new SalariedEmployee(45000, 1250);
         SalariedEmployee emp3 = new SalariedEmployee(90000,0);
-
+        */
+        
+        //Liskov Substitution Principle - Polymorphic Employees
+        Employee emp1 = new HourlyEmployee(10.50, 2020);
+        Employee emp2 = new SalariedEmployee(45000, 1250);
+        Employee emp3 = new SalariedEmployee(90000,0);
+        Employable e = new HourlyEmployee();//based upon top level abstraction
+        
         // High-level module
         HRService hr = new HRService();
 

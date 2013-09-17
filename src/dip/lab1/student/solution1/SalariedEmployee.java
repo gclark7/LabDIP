@@ -6,7 +6,12 @@ package dip.lab1.student.solution1;
  *
  * @author your name goes here
  */
-public class SalariedEmployee extends Employee {
+public class SalariedEmployee implements Employee {
+    
+    
+    PayType payType;
+    
+    
 
     /** default constructor. Is this the best way to go? */
     public SalariedEmployee() {}

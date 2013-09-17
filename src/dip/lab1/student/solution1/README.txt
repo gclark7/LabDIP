@@ -50,3 +50,152 @@ a polymorphic way (call common method(s)). But you will need to change or
 replace the existing methods to accomplish this.
 
 DON'T ALLOW YOURSELF TO BE PARALYZED BY CONFUSION! ASK FOR HELP EARLY AND OFTEN!
+
+//Employee
+ // You gotta question if these are appropriate for ALL employees?
+    private double hourlyRate;
+    private double totalHrsForYear;
+    private double annualSalary;
+    private double annualBonus;
+
+    /**
+     * Returns annual wages for hourly workers. Is this polymorphic?
+     * Could it be? Does it belong here?
+     *
+     * @return annual wages for hourly workers using the formula
+     * annualWages = hourlyRate * totalHrsForYear
+     */
+    public double getAnnualWages() {
+        return hourlyRate * totalHrsForYear;
+    }
+
+    /**
+     * Returns annual bonus for salaried workers. Is this polymorphic?
+     * Could it be? Does it belong here?
+     *
+     * @return annual bonus or zero if none.
+     */
+    public double getAnnualBonus() {
+        return annualBonus;
+    }
+
+    /**
+     * Is this polymorphic? Should it be? Does it belong here?
+     * @param annualBonus -- think carefully about this
+     */
+    public void setAnnualBonus(double annualBonus) {
+        this.annualBonus = annualBonus;
+    }
+
+    /**
+     * Is this polymorphic? Should it be? Does it belong here?
+     * @return
+     */
+    public double getAnnualSalary() {
+        return annualSalary;
+    }
+
+    /**
+     * Is this polymorphic? Should it be? Does it belong here?
+     * @param annualSalary - think carefully about this
+     */
+    public void setAnnualSalary(double annualSalary) {
+        this.annualSalary = annualSalary;
+    }
+
+    /**
+     * Is this polymorphic? Should it be? Does it belong here?
+     * @return
+     */
+    public double getHourlyRate() {
+        return hourlyRate;
+    }
+
+    /**
+     * Is this polymorphic? Should it be? Does it belong here?
+     * @param hourlyRate -- think carefully about this
+     */
+    public void setHourlyRate(double hourlyRate) {
+        this.hourlyRate = hourlyRate;
+    }
+
+    /**
+     * Is this polymorphic? Should it be? Does it belong here?
+     * @return
+     */
+    public double getTotalHrsForYear() {
+        return totalHrsForYear;
+    }
+
+    /**
+     * Is this polymorphic? Should it be? Does it belong here?
+     * @param totalHrsForYear -- think carefully about this
+     */
+    public void setTotalHrsForYear(double totalHrsForYear) {
+        this.totalHrsForYear = totalHrsForYear;
+    }
+
+
+//HR
+private static final String ERROR_MSG =
+            "Cannot get annual wages because no valid employee type provided";
+    private static final String ERROR_TITLE = "Employee Type Unknown";
+
+    /**
+     * This is a truly horrible way to make decisions. Very rigid and fragile!
+     * @param e - an employee object (not truly polymorphic!)
+     * employeeType - a String identifying the employee type. A constant
+     * (see above) should be used for this, but can you guarantee it will be?
+     * Are there other options? Hint: enum
+     * @return the annual compensation for supported employee types
+     */
+    
+    
+    public double getAnnualCompensationForEmployee(Employee e,
+            String employeeType)
+    {
+        double annualCompensation = 0;
+
+        // One example of using fragile if logic to determine employee type.
+        // If only we could use polymorphism instead!
+        if(employeeType.equals(HOURLY_TYPE)) {
+            annualCompensation = e.getAnnualWages();
+
+        } else if(employeeType.equals(SALARIED_TYPE)) {
+            annualCompensation = e.getAnnualSalary();
+
+        } else {
+            JOptionPane.showMessageDialog(
+                    null, ERROR_MSG, ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+        }
+
+        return annualCompensation;
+    }
+
+
+    /**
+     * This is another truly horrible way to make decisions.
+     * Very rigid and fragile!
+     * @param e - an employee object (not truly polymorphic!)
+     * @return the annual compensation for supported employee types
+     */
+    public double getAnnualCompensationForEmployee(Employee e) {
+        double annualCompensation = 0;
+
+        // One example of using fragile if logic to determine employee type.
+        // If only we could use polymorphism!
+        // NOTE: you don't need both versions (the one above and this one).
+        // Find a single, better way, using DIP principles.
+        if(e instanceof HourlyEmployee) {
+            annualCompensation = e.getAnnualWages();
+
+        } else if(e instanceof SalariedEmployee) {
+            annualCompensation = e.getAnnualSalary();
+
+        } else {
+            JOptionPane.showMessageDialog(
+                    null, ERROR_MSG, ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+        }
+
+        return annualCompensation;
+    }
