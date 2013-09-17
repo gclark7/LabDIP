@@ -14,13 +14,26 @@ public class HourlyEmployee implements Employee{
     private String lName;
     private double hourlyRate;
     private double overTimeRate;
+    private UserInput userIn;
+    private UserOutput userOut;
     
     
+    public HourlyEmployee (){
+        userIn=new KeyboardInput();
+        userOut=new ConsoleOutput();
+        
+        
+         payType= new HourlyPayType();//no need to ask for it
+        //PayType has its own methods for calculating pay  
+        //used this instead of enum...I like enums but this seems more efficient
+    }
     
+    //if needed
     public HourlyEmployee(String fName, String lName, double hourlyRate) {
         this.fName=fName;
         this.lName=lName;
         this.hourlyRate=hourlyRate;//negotiated through HR
+        overTimeRate=1.5*hourlyRate;
         
         payType= new HourlyPayType();//no need to ask for it
         //PayType has its own methods for calculating pay  
@@ -75,6 +88,15 @@ public class HourlyEmployee implements Employee{
     }
     
     
-    
+    private boolean testStringForNumberParse(String s){
+        boolean num=false;
+        
+        try{
+                Double.parseDouble(s);
+                num=true;
+            }catch(NumberFormatException e){num=false;}
+        
+        return num;
+    }
 
 }

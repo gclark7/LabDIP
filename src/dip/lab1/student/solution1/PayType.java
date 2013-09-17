@@ -10,8 +10,7 @@ package dip.lab1.student.solution1;
  */
 public interface PayType {
     
-     public static enum WageType {SALARIED, HOURLY
-    }
+     public static enum WageType {SALARIED, HOURLY}
      
     public double calculateWage();
    // public void setPayType(WageType w);//I like enums, but a whole class is better for this project
