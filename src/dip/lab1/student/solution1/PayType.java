@@ -14,5 +14,6 @@ public interface PayType {
      
     public double calculateWage();
    // public void setPayType(WageType w);//I like enums, but a whole class is better for this project
+    public double getAnnualWage();
     
 }

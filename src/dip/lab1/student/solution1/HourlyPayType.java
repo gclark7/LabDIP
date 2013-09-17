@@ -132,6 +132,112 @@ public class HourlyPayType implements PayType{
         
     }
     
-    
+   
+    @Override
+    public double getAnnualWage(){
+        double hours=0.00;
+        //double overTimeHours=0.00;
+        //double overTimeRate=0.00;
+        double basePayRate=0.00;
+       
+        
+        boolean ready=false;
+        String uIn="";
+        
+        //get user hours
+        do{
+            
+            userOut.writeLine(PROMPT_FOR_HOURS);
+            uIn=userIn.readLine();
+            try{
+                hours=Double.parseDouble(uIn);
+                if(hours < MIN) {
+                    userOut.writeLine(ENTRY_ERR);
+                }else{
+                    hours=Double.parseDouble(uIn);
+                    ready=true;
+                    break;
+                }
+            }catch(NumberFormatException e){userOut.writeLine(NEED_NUMBER);}
+            if(!ready){
+                userOut.writeLine(PROMPT_AGAIN);
+            }
+            
+        }while(!ready);
+        
+        //get base rate
+        ready=false;
+         
+        do{
+            
+            userOut.writeLine(PROMPT_FOR_BASERATE);
+            uIn=userIn.readLine();
+            try{
+                basePayRate=Double.parseDouble(uIn);
+                if(basePayRate < MIN) {
+                    userOut.writeLine(ENTRY_ERR);
+                }else{
+                    basePayRate=Double.parseDouble(uIn);
+                    ready=true;
+                    break;
+                }
+            }catch(NumberFormatException e){userOut.writeLine(NEED_NUMBER);}
+            if(!ready){
+                userOut.writeLine(PROMPT_AGAIN);
+            }
+            
+        }while(!ready);
+        
+        /*
+        //get overtime hours
+        ready=false;
+        
+        do{
+            
+            userOut.writeLine(PROMPT_FOR_OVERTIME_HOURS);
+            uIn=userIn.readLine();
+            try{
+                overTimeHours=Double.parseDouble(uIn);
+                if(overTimeHours < MIN) {
+                    userOut.writeLine(ENTRY_ERR);
+                }else{
+                    overTimeHours=Double.parseDouble(uIn);
+                    ready=true;
+                    break;
+                }
+            }catch(NumberFormatException e){userOut.writeLine(NEED_NUMBER);}
+            if(!ready){
+                userOut.writeLine(PROMPT_AGAIN);
+            }
+            
+        }while(!ready);
+        
+        //get overtime rate
+        ready=false;
+        
+        do{
+            
+            userOut.writeLine(PROMPT_FOR_OVERTIME_RATE);
+            uIn=userIn.readLine();
+            try{
+                overTimeRate=Double.parseDouble(uIn);
+                if(overTimeRate < MIN) {
+                    userOut.writeLine(ENTRY_ERR);
+                }else{
+                    ready=true;
+                    break;
+                }
+            }catch(NumberFormatException e){userOut.writeLine(NEED_NUMBER);}
+            
+            if(!ready){
+                userOut.writeLine(PROMPT_AGAIN);
+            }
+            
+        }while(!ready);
+        * */
+        
+        return (hours*basePayRate);
+        
+    }
     
 }

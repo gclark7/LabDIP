@@ -27,7 +27,8 @@ public class SalariedEmployee implements Employee {
     }
     
     public double howMuchDoWePayEmployeeAnnually(){
-        
+        double x = payType.getAnnualWage();
+        return x;
     }
 
     @Override

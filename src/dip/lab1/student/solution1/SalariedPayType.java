@@ -32,6 +32,11 @@ public class SalariedPayType implements PayType{
           return something;
      }
     
+    @Override
+    public double getAnnualWage(){
+        double x=0;
+        return x;
+    }
     
     
     
