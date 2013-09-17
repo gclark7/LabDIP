@@ -25,7 +25,7 @@ public interface Employee extends Employable{
     
     public abstract double payEmployee();
     public abstract double raiseEmployeeBasePay();
-    
+    public abstract double howMuchDoWePayEmployeeAnnually();
     public abstract void setEmployeeID();//integer
     public abstract int getEmployeeID();
     public abstract String getEmployeeFname();

@@ -25,6 +25,10 @@ public class SalariedEmployee implements Employee {
     public double payEmployee() {
         return payType.calculateWage();
     }
+    
+    public double howMuchDoWePayEmployeeAnnually(){
+        
+    }
 
     @Override
     public double raiseEmployeeBasePay() {

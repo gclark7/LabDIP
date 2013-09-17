@@ -129,6 +129,7 @@ public class HourlyPayType implements PayType{
         
         
         return (overTimeRate*overTimeHours)+(hours*basePayRate);
+        
     }
     
     

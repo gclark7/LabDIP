@@ -48,7 +48,14 @@ public class HourlyEmployee implements Employee{
 
     @Override
     public double payEmployee() {
-        return payType.calculateWage();
+        double x= payType.calculateWage();
+       
+        return x;
+    }
+    
+    @Override
+    public double howMuchDoWePayEmployeeAnnually(){
+        
     }
 
     @Override

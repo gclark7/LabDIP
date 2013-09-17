@@ -39,6 +39,7 @@ public class Startup {
         HRService hr = new HRService();
         
         hr.hireEmployee();
+        hr.hireEmployee();
         hr.payAllEmployees();
         
         // Just utility code to format numbers nicely.

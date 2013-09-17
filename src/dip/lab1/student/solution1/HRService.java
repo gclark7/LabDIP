@@ -21,6 +21,7 @@ public class HRService {
     private final String TRY_AGAIN="Please Try Again";
     
     
+    
     private Employee[] e = new Employee[0];
     
     public HRService(){
@@ -40,10 +41,16 @@ public class HRService {
     public final void hireEmployee(){
         boolean ready=false;
         String uIn="";
-        int newSize=e.length+1;
         Employee n=null;
-        Employee[] x=new Employee[newSize];//resize our temp array
-        x=e.clone();//grab the current employees
+        //int newSize=e.length+1;
+        //int newIndex = newSize-1;
+        Employee[] x = new Employee[e.length+1];//create temp array
+        //check e[] for existing records
+        if(e.length!=0){
+            System.arraycopy(e,0,x,0,e.length);
+            //x;//grab the current employees
+        }
+        
         
         userOut.writeLine(PROMPT_EMPLOYEE_TYPE);
         for(PayType.WageType w: PayType.WageType.values()){
@@ -53,9 +60,11 @@ public class HRService {
         
         do{
             uIn=userIn.readLine();
-            for(int j=0;j<PayType.WageType.values().length;j++){
-                if(uIn.equals(PayType.WageType.values()[j].toString())){
-                    ready=true;
+            //for(int j=0;j<PayType.WageType.values().length;j++){
+                //if(uIn.toUpperCase().equals(PayType.WageType.values()[j].toString())){
+            for(PayType.WageType wt: PayType.WageType.values()){
+                if(uIn.toUpperCase().equals(wt.toString())){
+                        ready=true;
                 }
             }
             if(!ready){
@@ -63,13 +72,14 @@ public class HRService {
             }
         }while(!ready);
         
-        switch(PayType.WageType.valueOf(uIn)){
+        switch(PayType.WageType.valueOf(uIn.toUpperCase())){
             case HOURLY: n=new HourlyEmployee();break;
             case SALARIED: n=new SalariedEmployee();break;
             
         }
-        x[newSize]=n;//enroll the employee in our array
+        x[e.length]=n;//enroll the employee in our array
         e=x;//giver 'er the ol' swich-er-roo
+        
     }
     
     
