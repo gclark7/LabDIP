@@ -9,22 +9,25 @@ package dip.lab3;
  * @author gcDataTechnology
  */
 public class LaptopDevice implements Device{
-     private DeviceType deviceType;
+     private DeviceType deviceType=DeviceType.LAPTOP;
      private MessageHandler messageHandler;
      private MessageType[] compatibleMessages;
-     private final int EXPANDARRAY=1;
+     //private final int EXPANDARRAY=1;
      private final int STARTING_INDEX=0;
      private UserOutput userOut;
      private Message message;
      
      private final String WRONG_MESSAGE_TYPE="I cannot receive that message type";
+     private String SENDING_STARTED="I am sending a message from a " + deviceType + " to a ";
+     private final String ERROR="ERROR...MyBad";
+     private final String MESSAGE_RECEIVED="The package has been received";
      
     
      //constructors
         
      public LaptopDevice(MessageType[] types, UserOutput userOut){
          if(types!=null && userOut!=null){
-             deviceType=DeviceType.LAPTOP;
+             
              messageHandler = new MessageHandler();
              this.userOut=userOut;
 
@@ -33,6 +36,7 @@ public class LaptopDevice implements Device{
              setCompatibleMessageTypes(types);
          }else{
              //throws exception
+             userOut.writeLine(ERROR);
          }
          
      }
@@ -40,7 +44,7 @@ public class LaptopDevice implements Device{
      //Destination Methods
      @Override
      public final void receiveMessageFromSource(Message message){
-            
+            userOut.writeLine(MESSAGE_RECEIVED);
          //useMessage has exhausive error handling since it was declared public abstract in the interface
              useMessage(message);
             
@@ -55,6 +59,10 @@ public class LaptopDevice implements Device{
                     goodMessage=true;
                 }
             }
+        }else{
+            //throws exception
+            userOut.writeLine(ERROR);
+        
         }
         return goodMessage;
     }
@@ -72,6 +80,7 @@ public class LaptopDevice implements Device{
        System.arraycopy(types,STARTING_INDEX, compatibleMessages, STARTING_INDEX, types.length);
        }else{
            //throw an exception
+           userOut.writeLine(ERROR);
        }
     }
     
@@ -91,7 +100,7 @@ public class LaptopDevice implements Device{
                  for(MessageType m:compatibleMessages){
                     if(message.getMessageType().equals(m)){
                         //use message accordingly
-                        System.out.println(message.getMessageEncoding());//using as a substitute reality
+                        userOut.writeLine(message.getMessageEncoding());//using as a substitute reality
                     }
                  }
              }else{
@@ -100,6 +109,7 @@ public class LaptopDevice implements Device{
              }
         }else{
             //throws exception
+            userOut.writeLine(ERROR);
         }
             
     }
@@ -114,6 +124,7 @@ public class LaptopDevice implements Device{
         message=new Message(type);
         }else{
             //throw exception
+            userOut.writeLine(ERROR);
         }
     }
     
@@ -125,9 +136,13 @@ public class LaptopDevice implements Device{
     @Override
     public  final void sendMessageToDestination(Message message, MessageDestination destination){
         if(message!=null && destination!=null){
-        messageHandler.deliverMessageToDesination(message, destination);
+            userOut.writeLine(SENDING_STARTED + destination.getDeviceType().toString());
+            
+            //delegates the work
+            messageHandler.deliverMessageToDesination(message, destination);
         }else{
             //throw exception
+            userOut.writeLine(ERROR);
         }
         
     }
@@ -142,6 +157,7 @@ public class LaptopDevice implements Device{
         this.deviceType = deviceType;
         }else{
             //throws exception
+            userOut.writeLine(ERROR);
         }
     }
 
@@ -154,6 +170,7 @@ public class LaptopDevice implements Device{
         this.messageHandler = messageHandler;
         }else{
             //throws exception
+            userOut.writeLine(ERROR);
         }
         
     }

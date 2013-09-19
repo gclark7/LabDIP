@@ -10,31 +10,43 @@ import javax.swing.JOptionPane;
  */
 public class MobilePhoneDevice implements Device{
     
-      private DeviceType deviceType;
+     
+     private DeviceType deviceType=DeviceType.MOBILEPHONE;
      private MessageHandler messageHandler;
      private MessageType[] compatibleMessages;
-     private final int EXPANDARRAY=1;
+     //private final int EXPANDARRAY=1;
      private final int STARTING_INDEX=0;
-     //UserOutput userOut;
-     Message message;
+     private UserOutput userOut;
+     private Message message;
+     
+     private final String WRONG_MESSAGE_TYPE="I cannot receive that message type";
+     private final String SENDING_STARTED="I am sending a message from a " + deviceType + " to a ";
+     private final String ERROR="ERROR...MyBad";
+     private final String MESSAGE_RECEIVED="The package has been received";
      
     
-     
-     public MobilePhoneDevice(MessageType[] types){
-         deviceType=DeviceType.MOBILEPHONE;
-         messageHandler = new MessageHandler();
-         
-         
-         //set message types
-         setCompatibleMessageTypes(types);
+     //constructors
+        
+     public MobilePhoneDevice(MessageType[] types, UserOutput userOut){
+         if(types!=null && userOut!=null){
+             
+             messageHandler = new MessageHandler();
+             this.userOut=userOut;
+
+
+             //set message types
+             setCompatibleMessageTypes(types);
+         }else{
+             //throws exception
+             userOut.writeLine(ERROR);
+         }
          
      }
      
-    
-      //Destination Methods
+     //Destination Methods
      @Override
      public final void receiveMessageFromSource(Message message){
-            
+            userOut.writeLine(MESSAGE_RECEIVED);
          //useMessage has exhausive error handling since it was declared public abstract in the interface
              useMessage(message);
             
@@ -49,6 +61,10 @@ public class MobilePhoneDevice implements Device{
                     goodMessage=true;
                 }
             }
+        }else{
+            //throws exception
+            userOut.writeLine(ERROR);
+        
         }
         return goodMessage;
     }
@@ -66,6 +82,7 @@ public class MobilePhoneDevice implements Device{
        System.arraycopy(types,STARTING_INDEX, compatibleMessages, STARTING_INDEX, types.length);
        }else{
            //throw an exception
+           userOut.writeLine(ERROR);
        }
     }
     
@@ -85,14 +102,16 @@ public class MobilePhoneDevice implements Device{
                  for(MessageType m:compatibleMessages){
                     if(message.getMessageType().equals(m)){
                         //use message accordingly
-                        System.out.println(message.getMessageEncoding());//using as a substitute reality
+                        userOut.writeLine(message.getMessageEncoding());//using as a substitute reality
                     }
                  }
              }else{
                  //throwsException;
+                 userOut.writeLine(WRONG_MESSAGE_TYPE);
              }
         }else{
             //throws exception
+            userOut.writeLine(ERROR);
         }
             
     }
@@ -107,6 +126,7 @@ public class MobilePhoneDevice implements Device{
         message=new Message(type);
         }else{
             //throw exception
+            userOut.writeLine(ERROR);
         }
     }
     
@@ -118,9 +138,13 @@ public class MobilePhoneDevice implements Device{
     @Override
     public  final void sendMessageToDestination(Message message, MessageDestination destination){
         if(message!=null && destination!=null){
-        messageHandler.deliverMessageToDesination(message, destination);
+            userOut.writeLine(SENDING_STARTED + destination.getDeviceType().toString());
+            
+            //delegates the work
+            messageHandler.deliverMessageToDesination(message, destination);
         }else{
             //throw exception
+            userOut.writeLine(ERROR);
         }
         
     }
@@ -135,6 +159,7 @@ public class MobilePhoneDevice implements Device{
         this.deviceType = deviceType;
         }else{
             //throws exception
+            userOut.writeLine(ERROR);
         }
     }
 
@@ -147,10 +172,10 @@ public class MobilePhoneDevice implements Device{
         this.messageHandler = messageHandler;
         }else{
             //throws exception
+            userOut.writeLine(ERROR);
         }
         
     }
-    
     
     
 }

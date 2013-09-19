@@ -13,5 +13,6 @@ public interface MessageDestination {
     public abstract void setCompatibleMessageTypes(MessageType[] types);
     public abstract void receiveMessageFromSource(Message message);
     public abstract void useMessage(Message message);
+    public abstract DeviceType getDeviceType();
     
 }
