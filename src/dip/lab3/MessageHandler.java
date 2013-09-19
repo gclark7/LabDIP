@@ -13,10 +13,13 @@ public class MessageHandler {
    //takes the destination and runs the checks
     //delivers the message
     
-    public void deliverMessageToDesination(Message message, Destination destination){
+    public void deliverMessageToDesination(Message message, MessageDestination destination){
         //perform type check
-        
+        if(message!=null && destination !=null){
             destination.receiveMessageFromSource(message);
+        }else{
+            //throws exception
+        }
         
     }
 }

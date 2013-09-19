@@ -4,10 +4,14 @@
  */
 package dip.lab3;
 
+
 /**
  *
  * @author gcDataTechnology
  */
-public interface Device extends MessageSource, MessageDestination{
+public interface UserOutput {
+    
+    
+     public abstract void writeLine( String line );
     
 }

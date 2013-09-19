@@ -4,10 +4,18 @@
  */
 package dip.lab3;
 
+
+
 /**
  *
  * @author gcDataTechnology
  */
-public interface Device extends MessageSource, MessageDestination{
+public class ConsoleOutput implements UserOutput{
+    
+    
+    public final void writeLine( String line ) {
+            
+            System.out.println( line );
+	}
     
 }

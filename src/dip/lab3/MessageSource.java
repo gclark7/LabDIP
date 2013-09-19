@@ -8,11 +8,11 @@ package dip.lab3;
  *
  * @author gcDataTechnology
  */
-public interface Source {
+public interface MessageSource {
     
     //public abstract void provideMessageToDevice();
     public abstract void createMessage(MessageType type);
     public abstract Message getMessage();
-    public abstract void sendMessageToDestination(Message message, Destination destination);
+    public abstract void sendMessageToDestination(Message message, MessageDestination destination);
     
 }

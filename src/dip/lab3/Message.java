@@ -10,8 +10,8 @@ package dip.lab3;
  */
 public class Message implements MessageTemplate{
     
-    MessageType type;
-    String messageEncoding="";
+    private MessageType type;
+    private String messageEncoding="";
     
     
     public Message(MessageType type){
@@ -21,12 +21,12 @@ public class Message implements MessageTemplate{
     }
     
     @Override
-   public MessageType getMessageType(){
+   public final MessageType getMessageType(){
        return type;
    }
    
    @Override
-   public String getMessageEncoding(){
+   public final String getMessageEncoding(){
        return messageEncoding;
    }
 }

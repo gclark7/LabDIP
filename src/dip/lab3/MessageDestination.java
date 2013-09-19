@@ -8,7 +8,7 @@ package dip.lab3;
  *
  * @author gcDataTechnology
  */
-public interface Destination {
+public interface MessageDestination {
     public abstract MessageType[] getCompatibleMessageTypes();
     public abstract void setCompatibleMessageTypes(MessageType[] types);
     public abstract void receiveMessageFromSource(Message message);
