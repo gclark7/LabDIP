@@ -8,11 +8,11 @@ package dip.lab3;
  *
  * @author gcDataTechnology
  */
-public class MessageHandler {
+public class MessageHandler implements MessageHandlerTemplate {
     
    //takes the destination and runs the checks
     //delivers the message
-    
+    @Override
     public void deliverMessageToDesination(Message message, MessageDestination destination){
         //perform type check
         if(message!=null && destination !=null){

@@ -10,11 +10,12 @@ package dip.lab3;
  */
 public class LaptopDevice implements Device{
      private DeviceType deviceType=DeviceType.LAPTOP;
-     private MessageHandler messageHandler;
+     private MessageHandlerTemplate messageHandler;
      private MessageType[] compatibleMessages;
      //private final int EXPANDARRAY=1;
      private final int STARTING_INDEX=0;
      private UserOutput userOut;
+     private UserInput userInput;
      private Message message;
      
      private final String WRONG_MESSAGE_TYPE="I cannot receive that message type";
@@ -25,11 +26,12 @@ public class LaptopDevice implements Device{
     
      //constructors
         
-     public LaptopDevice(MessageType[] types, UserOutput userOut){
-         if(types!=null && userOut!=null){
+     public LaptopDevice(MessageType[] types, UserInput userIn, UserOutput userOut, MessageHandlerTemplate messageHandler){
+         if(types!=null && userIn!=null && userOut!=null && messageHandler!=null){
              
-             messageHandler = new MessageHandler();
+             this.messageHandler = messageHandler;
              this.userOut=userOut;
+             this.userInput=userIn;
 
 
              //set message types
@@ -161,11 +163,11 @@ public class LaptopDevice implements Device{
         }
     }
 
-    public final MessageHandler getMessageHandler() {
+    public final MessageHandlerTemplate getMessageHandler() {
         return messageHandler;
     }
 
-    public final void setMessageHandler(MessageHandler messageHandler) {
+    public final void setMessageHandler(MessageHandlerTemplate messageHandler) {
         if(messageHandler!=null){
         this.messageHandler = messageHandler;
         }else{
