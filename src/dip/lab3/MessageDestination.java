@@ -11,8 +11,10 @@ package dip.lab3;
 public interface MessageDestination {
     public abstract MessageType[] getCompatibleMessageTypes();
     public abstract void setCompatibleMessageTypes(MessageType[] types);
-    public abstract void receiveMessageFromSource(Message message);
+    public abstract void receiveMessageFromSource(Message message, MessageSource source);
     public abstract void useMessage(Message message);
     public abstract DeviceType getDeviceType();
+    public abstract void replyToSource(MessageSource source, String line);
+    
     
 }

@@ -20,19 +20,23 @@ public class LaptopDevice implements Device{
      
      private final String WRONG_MESSAGE_TYPE="I cannot receive that message type";
      private String SENDING_STARTED="I am sending a message from a " + deviceType + " to a ";
-     private final String ERROR="ERROR...MyBad";
+     private final String ERROR="ERROR...ProcessConflict";
      private final String MESSAGE_RECEIVED="The package has been received";
+     private String IPAddress="";
+     public static int IPnode=1;
+     MessageSource source;
+     
      
     
      //constructors
         
      public LaptopDevice(MessageType[] types, UserInput userIn, UserOutput userOut, MessageHandlerTemplate messageHandler){
          if(types!=null && userIn!=null && userOut!=null && messageHandler!=null){
-             
+             IPnode++;
              this.messageHandler = messageHandler;
              this.userOut=userOut;
              this.userInput=userIn;
-
+             IPAddress="192.168.1." + IPnode;
 
              //set message types
              setCompatibleMessageTypes(types);
@@ -45,8 +49,10 @@ public class LaptopDevice implements Device{
      
      //Destination Methods
      @Override
-     public final void receiveMessageFromSource(Message message){
+     public final void receiveMessageFromSource(Message message, MessageSource source){
+            this.source=source;
             userOut.writeLine(MESSAGE_RECEIVED);
+            replyToSource(source, MESSAGE_RECEIVED);
          //useMessage has exhausive error handling since it was declared public abstract in the interface
              useMessage(message);
             
@@ -64,6 +70,7 @@ public class LaptopDevice implements Device{
         }else{
             //throws exception
             userOut.writeLine(ERROR);
+            replyToSource(this.source,ERROR);
         
         }
         return goodMessage;
@@ -107,10 +114,12 @@ public class LaptopDevice implements Device{
                  }
              }else{
                  //throwsException;
+                 replyToSource(this.source,WRONG_MESSAGE_TYPE);
                  userOut.writeLine(WRONG_MESSAGE_TYPE);
              }
         }else{
             //throws exception
+            replyToSource(this.source,ERROR);
             userOut.writeLine(ERROR);
         }
             
@@ -127,6 +136,7 @@ public class LaptopDevice implements Device{
         }else{
             //throw exception
             userOut.writeLine(ERROR);
+            
         }
     }
     
@@ -136,12 +146,12 @@ public class LaptopDevice implements Device{
     }
     
     @Override
-    public  final void sendMessageToDestination(Message message, MessageDestination destination){
+    public  final void sendMessageToDestination(Message message, MessageSource source, MessageDestination destination){
         if(message!=null && destination!=null){
             userOut.writeLine(SENDING_STARTED + destination.getDeviceType().toString());
             
             //delegates the work
-            messageHandler.deliverMessageToDesination(message, destination);
+            messageHandler.deliverMessageToDesination(message, source,destination);
         }else{
             //throw exception
             userOut.writeLine(ERROR);
@@ -177,7 +187,19 @@ public class LaptopDevice implements Device{
         
     }
 
+    @Override
+     public UserOutput getSourceUserOutput(){
+      return userOut;   
+    }
     
     
+    @Override
+    public  void replyToSource(MessageSource source, String line){
+        source.getSourceUserOutput().writeLine(getIPAddress() + ":: " + line);
+    }
+    
+    public String getIPAddress(){
+        return IPAddress;
+    }
     
 }

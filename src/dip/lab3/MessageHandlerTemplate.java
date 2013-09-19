@@ -9,5 +9,5 @@ package dip.lab3;
  * @author gcDataTechnology
  */
 public interface MessageHandlerTemplate {
-     public abstract void deliverMessageToDesination(Message message, MessageDestination destination);
+     public abstract void deliverMessageToDesination(Message message,  MessageSource source,MessageDestination destination);
 }

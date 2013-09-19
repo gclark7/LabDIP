@@ -13,6 +13,6 @@ public interface MessageSource {
     //public abstract void provideMessageToDevice();
     public abstract void createMessage(MessageType type);
     public abstract Message getMessage();
-    public abstract void sendMessageToDestination(Message message, MessageDestination destination);
-    
+    public abstract void sendMessageToDestination(Message message, MessageSource source, MessageDestination destination);
+    public abstract UserOutput getSourceUserOutput();
 }

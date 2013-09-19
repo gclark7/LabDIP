@@ -63,8 +63,9 @@ public class Driver {
         //simulates user & drop down box selectin of messages available...If I have enough time I would modify to pass an input & output class
         
         d1.createMessage(d2.getCompatibleMessageTypes()[INDEX]);
+        //d1.createMessage(MessageType.DATABASE_DATA);
         //d1.createMessage(MessageType.DATABASE_DATA);//shows error handling
-        d1.sendMessageToDestination(d1.getMessage(),d2);
+        d1.sendMessageToDestination(d1.getMessage(),d1,d2);
         
         
         
