@@ -39,7 +39,7 @@ public class MobilePhoneDevice implements Device{
              this.messageHandler = messageHandler;
              this.userOut=userOut;
              this.userInput=userIn;
-             IPAddress="192.168.1." + IPnode;
+             IPAddress="210.178.5." + IPnode;
 
              //set message types
              setCompatibleMessageTypes(types);

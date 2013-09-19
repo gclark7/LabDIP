@@ -36,14 +36,14 @@ public class Driver {
         
         
         //new enrollment requsted & approved
-        //Device 0
+        //CLOUD Device 0
         tempDevices  = new Device[userDevices.length+EXPANDARRAY];
         System.arraycopy(userDevices, STARTING_INDEX, tempDevices, STARTING_INDEX, userDevices.length);   
         
         tempDevices[userDevices.length]= new LaptopDevice(msgTypes,userIn, userOut,messageHandler);
         userDevices=tempDevices;
         
-         //Device 1
+         //CLOUD Device 1
         tempDevices  = new Device[userDevices.length+EXPANDARRAY];
         System.arraycopy(userDevices, STARTING_INDEX, tempDevices, STARTING_INDEX, userDevices.length);     
         tempDevices[userDevices.length]= new LaptopDevice(msgTypes,userIn, userOut,messageHandler);
@@ -62,8 +62,8 @@ public class Driver {
         
         //simulates user & drop down box selectin of messages available...If I have enough time I would modify to pass an input & output class
         
-        d1.createMessage(d2.getCompatibleMessageTypes()[INDEX]);
-        //d1.createMessage(MessageType.DATABASE_DATA);
+        d1.createMessage(d2.getCompatibleMessageTypes()[INDEX]);//create a message to send
+        
         //d1.createMessage(MessageType.DATABASE_DATA);//shows error handling
         d1.sendMessageToDestination(d1.getMessage(),d1,d2);
         
