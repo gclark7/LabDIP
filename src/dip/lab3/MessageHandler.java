@@ -9,6 +9,15 @@ package dip.lab3;
  * @author gcDataTechnology
  */
 public class MessageHandler implements MessageHandlerTemplate {
+    private final String SOURCE_ERROR="Source Message Error";
+    
+           
+    @Override
+    public void enrollDevice(Device device){
+        
+    }
+    
+    
     
    //takes the destination and runs the checks
     //delivers the message
@@ -19,7 +28,11 @@ public class MessageHandler implements MessageHandlerTemplate {
             destination.receiveMessageFromSource(message,source);
         }else{
             //throws exception
+            source.getSourceUserOutput().writeLine(SOURCE_ERROR);
         }
         
     }
+    
+    
+    
 }

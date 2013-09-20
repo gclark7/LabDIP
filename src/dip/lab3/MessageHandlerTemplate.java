@@ -10,4 +10,5 @@ package dip.lab3;
  */
 public interface MessageHandlerTemplate {
      public abstract void deliverMessageToDesination(Message message,  MessageSource source,MessageDestination destination);
+     public abstract void enrollDevice(Device device);
 }
